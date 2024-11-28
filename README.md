@@ -4,8 +4,8 @@
 # CMPUT 291 Mini Project 2 - Fall 2024
 Group member names and ccids (3-4 members)  
   hkazmi Hooriya Kazmi
-hawaleh, Hana Awaleh
-  ccid3, name2  
+  aasolank, Angela  
+  harimoto, sho harimoto  
 
 # Group work break-down strategy
 Please add
