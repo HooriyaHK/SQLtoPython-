@@ -7,7 +7,7 @@ db = client['291db']
 tweets = db['tweets']
 
 # Load the JSON file
-with open('10.json', 'r', encoding='utf-8') as file:
+with open('100.json', 'r', encoding='utf-8') as file:
     json_data = [json.loads(line) for line in file]
 
 # Insert data into MongoDB
