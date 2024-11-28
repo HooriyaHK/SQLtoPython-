@@ -1,10 +1,4 @@
-from pymongo import MongoClient
-
-client = MongoClient('mongodb://localhost:27017/')
-db = client['291db']
-tweets = db['tweets']
-
-tweets.insert_many([
+([
     {
         "_id": 1,
         "content": "Learning MongoDB is fun!",
@@ -26,3 +20,5 @@ tweets.insert_many([
         "followersCount": 200  
     }
 ])
+
+print("Test data inserted successfully!")

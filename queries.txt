@@ -22,3 +22,32 @@ def view_user_details(username, port):
 # Example usage:
 view_user_details("username_here", 27017)
 
+Query 5 
+from pymongo import MongoClient
+from datetime import datetime
+
+def compose_tweet(content, port):
+    # Connect to MongoDB
+    client = MongoClient(f'mongodb://localhost:{port}/')
+    db = client['291db']
+    collection = db['tweets']
+    
+    # Create the tweet document
+    tweet = {
+        "content": content,
+        "username": "291user",
+        "date": datetime.now().strftime("%Y-%m-%d"),
+        "retweetCount": None,
+        "likeCount": None,
+        "quoteCount": None,
+        "followersCount": None
+    }
+    
+    # Insert the tweet into the collection
+    result = collection.insert_one(tweet)
+    
+    print(f"Tweet inserted with ID: {result.inserted_id}")
+
+# Test the function
+compose_tweet("This is my first tweet using Python and MongoDB!", 27017)
+
