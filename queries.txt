@@ -1,0 +1,24 @@
+Query 3
+def view_tweet_details(tweet_id, port):
+    client = MongoClient(f'mongodb://localhost:{port}/')
+    db = client['291db']
+    collection = db['tweets']
+    
+    tweet = collection.find_one({"_id": tweet_id})
+    print(tweet)
+
+# Example usage:
+view_tweet_details(ObjectId("tweet_id_here"), 27017)
+
+Query 4 
+def view_user_details(username, port):
+    client = MongoClient(f'mongodb://localhost:{port}/')
+    db = client['291db']
+    collection = db['tweets']
+    
+    user = collection.find_one({"username": username})
+    print(user)
+
+# Example usage:
+view_user_details("username_here", 27017)
+
