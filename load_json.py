@@ -11,10 +11,7 @@ def load_json_to_mongodb(json_file, port):
         db = client["291db"]
         collection = db["tweets"]
 
-         # Drop the collection if it exists
-        if "tweets" in db.list_collection_names():
-            collection.drop()
-            print("Existing 'tweets' collection dropped.")
+  
 
 
         # Insert data in batches
@@ -35,7 +32,12 @@ def load_json_to_mongodb(json_file, port):
             if batch:
                 collection.insert_many(batch)
                 print(f"Inserted {len(batch)} tweets into the collection.")
+            
+        return collection
 
         #print("All tweets have been successfully loaded into the 'tweets' collection.")
        # client.close()
        # print("MongoDB connection closed.")
+
+
+ 

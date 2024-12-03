@@ -104,7 +104,7 @@ def list_top_tweets(field, n, collection):
     for tweet in tweets:
         print(tweet)
 
-def list_top_users(n):
+def list_top_users(n, collection):
     """List top N users by followersCount."""
     
     users = collection.aggregate([
@@ -138,7 +138,7 @@ def compose_tweet(content, collection):
 if __name__ == "__main__":
      port = input("Enter MongoDB port number: ")
      file = input("Enter JSON file name: ")
-     db = load_json_to_mongodb(file, port)
+     collection = load_json_to_mongodb(file, port)
      while True:
         print("\nMain Menu")
         print("1. Search for tweets")
@@ -148,4 +148,34 @@ if __name__ == "__main__":
         print("5. Compose a tweet")
         print("6. Exit")
         choice = input("Enter your choice: ")
+
+        if choice == "1":
+            keywords = input("Enter keywords to search tweets: ").split()
+            search_tweets(keywords, collection)
+        elif choice == "2":
+            keyword = input("Enter user name to search users: ")
+            search_users(collection, keyword)
+        elif choice == "3":
+            n = input("How many tweets do you want to rank? ")
+            print("1. Rank by Retweet Count")
+            print("2. Rank by Like Count")
+            print("3. Rank by Quote Count")
+            field = input("How do you want the tweets to be ranked? ")
+            list_top_tweets(field, n, collection)
+        elif choice == "4":
+            n = input("How many users would you like to list?: ")
+            list_top_users(n, collection)
+        elif choice == "5":
+            content = input("Enter the tweet you would like to compose: ")
+            compose_tweet(content, collection)
+        elif choice == "6":
+            print("Goodbye! :)")
+            break
+
+
+        else:
+            print("invalid choice")
+
+        
+
     
