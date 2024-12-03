@@ -1,21 +1,6 @@
-[
-    {
-      "_id": 1,
-      "content": "This is a tweet",
-      "retweetCount": 10,
-      "likeCount": 20,
-      "quoteCount": 5,
-      "username": "user1",
-      "date": "2024-11-28"
-    },
-    {
-      "_id": 2,
-      "content": "Another tweet",
-      "retweetCount": 15,
-      "likeCount": 25,
-      "quoteCount": 8,
-      "username": "user2",
-      "date": "2024-11-28"
-    }
-  ]
-  
+{"id": 1, "date": "2024-11-30T14:00:00+00:00", "content": "Hello MongoDB", "user": {"username": "TestUser1", "displayname": "Tester One", "location": "Edmonton, Canada"}}
+{"id": 2, "date": "2024-11-30T14:05:00+00:00", "content": "Testing functionality", "user": {"username": "TestUser2", "displayname": "Tester Two", "location": "Calgary, Canada"}}
+{"id": 3, "date": "2024-11-30T14:10:00+00:00", "content": "Search query", "user": {"username": "TestUser3", "displayname": "Tester Three", "location": "Toronto, Canada"}}
+{"id": 4, "date": "2024-11-30T14:15:00+00:00", "content": "Duplicate test", "user": {"username": "TestUser4", "displayname": "Tester Four", "location": "Vancouver, Canada"}}
+{"id": 5, "date": "2024-11-30T14:20:00+00:00", "content": "Keyword match", "user": {"username": "TestUser5", "displayname": "Tester Five", "location": "Montreal, Canada"}}
+{"id": 6, "date": "2024-11-30T14:25:00+00:00", "content": "Test match", "user": {"username": "TestUser6", "displayname": "Tester Six", "location": "Quebec City, Canada"}}
