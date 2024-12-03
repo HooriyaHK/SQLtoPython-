@@ -6,8 +6,7 @@ from pymongo import MongoClient
 from datetime import datetime
 
 #multi join should work
-def search_tweets(db, keywords):
-    collection = db['tweets']
+def search_tweets(keywords, collection):
     
     query = {"$and": [{"content": {"$regex": rf"\b{keyword}\b", "$options": "i"}} for keyword in keywords]} 
     
