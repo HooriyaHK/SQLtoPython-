@@ -5,7 +5,7 @@ from pymongo import MongoClient
 from datetime import datetime
 
 #multi join should work
-def search_tweets(keywords, port):
+def search_tweets(collection, keywords):
     """Search tweets containing specific keywords."""
 
     # Support both single and multiple keyword search
@@ -113,3 +113,17 @@ def compose_tweet(content, port):
     result = collection.insert_one(tweet)
     print(f"Tweet inserted with ID: {result.inserted_id}")
 
+if __name__ == "__main__":
+     port = input("Enter the port number where MongoDB is running: ").strip()
+     file = input("Enter the JSON file name: ")
+     load_json_to_mongodb(file, port)
+
+     while True:
+        print("\nMain Menu")
+        print("2. Search for users")
+        print("3. List top tweets")
+        print("4. List top users")
+        print("5. Compose a tweet")
+        print("6. Exit")
+        
+        choice = input("Enter your choice: ")
