@@ -38,6 +38,11 @@ def load_json_to_mongodb(json_file, port):
                 print(f"Inserted {len(batch)} tweets into the collection.")
         return collection
 
+        return collection
+
         #print("All tweets have been successfully loaded into the 'tweets' collection.")
        # client.close()
        # print("MongoDB connection closed.")
+
+
+ 

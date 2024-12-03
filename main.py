@@ -6,26 +6,43 @@ from pymongo import MongoClient
 from datetime import datetime
 
 #multi join should work
-def search_tweets(keywords, collection):
-    """Search tweets containing specific keywords."""
-    # Support both single and multiple keyword search
-    if isinstance(keywords, str):
-        keywords = [keywords]
-    # Build query to match all keywords
-    query = {"$and": [{"content": {"$regex": keyword, "$options": "i"}} for keyword in keywords]}
+def search_tweets(collection, keywords):
+   
+    query = {"$and": [{"content": {"$regex": rf"\b{keyword}\b", "$options": "i"}} for keyword in keywords]} 
+    
     results = collection.find(query)
-    # getting matching tweets
-    for tweet in results:
-        print(f"ID: {tweet.get('_id')}")
-        print(f"Date: {tweet.get('date')}")
-        print(f"Content: {tweet.get('content')}")
-        print(f"Username: {tweet.get('username', {}).get('username', 'Unknown')}")
-        print("-" * 40)
 
-def search_users(db, keyword):
-    collection = db['tweets']  # collection name // not sure if we 
-                               # hardcode this so .. 
+    tweets = []
+    seen_ids = set()  # tracking seen tweet IDs avoid duplicates
 
+    print("\nTweets matching the keywords:")
+    for i, tweet in enumerate(results):
+        if tweet['id'] not in seen_ids: 
+            seen_ids.add(tweet['id'])
+            tweets.append(tweet)
+            print(f"({len(tweets)}). ID: {tweet['id']}, Date: {tweet['date']}, Content: {tweet['content']}, Username: {tweet['user']['username']}")
+    if not tweets:
+        print("No tweets found.")
+        return
+
+    while True:
+        try:
+            selection = int(input("\nEnter the number of the tweet to view full information (or 0 to go back): "))
+            if selection == 0:
+                print("Returning to main menu.")
+                break
+            elif 1 <= selection <= len(tweets):
+                selected_tweet = tweets[selection - 1]
+                print("\nFull information about the selected tweet:")
+                for key, value in selected_tweet.items(): #printing everything
+                    print(f"{key}: {value}")
+            else:
+                print("Invalid selection. Please choose a valid tweet number.")
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+
+
+def search_users(collection, keyword):
     query = {
         "$or": [
             {"user.displayname": {"$regex": keyword, "$options": "i"}},
@@ -83,7 +100,7 @@ def list_top_tweets(field, n, collection):
     for tweet in tweets:
         print(tweet)
 
-def list_top_users(n):
+def list_top_users(n, collection):
     """List top N users by followersCount."""
     
     users = collection.aggregate([
@@ -117,13 +134,43 @@ def compose_tweet(content, collection):
 if __name__ == "__main__":
      port = input("Enter MongoDB port number: ")
      file = input("Enter JSON file name: ")
-     db = load_json_to_mongodb(file, port)
-    #  while True:
-    #     print("\nMain Menu")
-    #     print("1. Search for tweets")
-    #     print("2. Search for users")
-    #     print("3. List top tweets")
-    #     print("4. List top users")
-    #     print("5. Compose a tweet")
-    #     print("6. Exit")
-    #     choice = input("Enter your choice: ")
+     collection = load_json_to_mongodb(file, port)
+     while True:
+        print("\nMain Menu")
+        print("1. Search for tweets")
+        print("2. Search for users")
+        print("3. List top tweets")
+        print("4. List top users")
+        print("5. Compose a tweet")
+        print("6. Exit")
+        choice = input("Enter your choice: ")
+
+        if choice == "1":
+            keywords = input("Enter keywords to search tweets: ").split()
+            search_tweets(collection, keywords)
+        elif choice == "2":
+            keyword = input("Enter user name to search users: ")
+            search_users(collection, keyword)
+        elif choice == "3":
+            n = input("How many tweets do you want to rank? ")
+            print("1. Rank by Retweet Count")
+            print("2. Rank by Like Count")
+            print("3. Rank by Quote Count")
+            field = input("How do you want the tweets to be ranked? ")
+            list_top_tweets(field, n, collection)
+        elif choice == "4":
+            n = input("How many users would you like to list?: ")
+            list_top_users(n, collection)
+        elif choice == "5":
+            content = input("Enter the tweet you would like to compose: ")
+            compose_tweet(content, collection)
+        elif choice == "6":
+            print("Goodbye! :)")
+            break
+
+        else:
+            print("invalid choice")
+
+        
+
+    
