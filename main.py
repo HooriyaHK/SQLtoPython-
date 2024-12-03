@@ -1,5 +1,6 @@
 #this should be where all our code is
-
+import load_json
+from load_json import load_json_to_mongodb
 import json
 from pymongo import MongoClient
 from datetime import datetime
@@ -113,6 +114,7 @@ def compose_tweet(content, port):
     result = collection.insert_one(tweet)
     print(f"Tweet inserted with ID: {result.inserted_id}")
 
+<<<<<<< HEAD
 if __name__ == "__main__":
      port = input("Enter the port number where MongoDB is running: ").strip()
      file = input("Enter the JSON file name: ")
@@ -120,10 +122,30 @@ if __name__ == "__main__":
 
      while True:
         print("\nMain Menu")
+=======
+  
+
+if __name__ == "__main__":
+
+     port = input("Enter MongoDB port number: ")
+     file = input("Enter JSON file name: ")
+     db = load_json_to_mongodb(file, port)
+     while True:
+        print("\nMain Menu")
+        print("1. Search for tweets")
+>>>>>>> main
         print("2. Search for users")
         print("3. List top tweets")
         print("4. List top users")
         print("5. Compose a tweet")
+<<<<<<< HEAD
         print("6. Exit")
         
         choice = input("Enter your choice: ")
+=======
+        print("6. Exit")    
+        choice = input("Enter your choice: ")
+
+
+       
+>>>>>>> main
