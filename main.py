@@ -42,10 +42,7 @@ def search_tweets(keywords, collection):
             print("Invalid input. Please enter a number.")
 
 
-def search_users(db, keyword):
-    collection = db['tweets']  # collection name // not sure if we 
-                               # hardcode this so .. 
-
+def search_users(keyword, collection):
     query = {
         "$or": [
             {"user.displayname": {"$regex": keyword, "$options": "i"}},
@@ -153,7 +150,7 @@ if __name__ == "__main__":
             search_tweets(keywords, collection)
         elif choice == "2":
             keyword = input("Enter user name to search users: ")
-            search_users(collection, keyword)
+            search_users(keyword, collection)
         elif choice == "3":
             n = input("How many tweets do you want to rank? ")
             print("1. Rank by Retweet Count")
