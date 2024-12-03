@@ -9,13 +9,13 @@ def load_json_to_mongodb(json_file, port):
 
         # Create database and collection
         db = client["291db"]
-        
+        collection = db["tweets"]
+
          # Drop the collection if it exists
         if "tweets" in db.list_collection_names():
             collection.drop()
             print("Existing 'tweets' collection dropped.")
-        else:
-             collection = db["tweets"]
+
 
         # Insert data in batches
         with open(json_file, "r", encoding="utf-8") as file:
