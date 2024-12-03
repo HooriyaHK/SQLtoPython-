@@ -9,7 +9,7 @@ Group member names and ccids (3-4 members)
   hawaleh, Hana Awaleh
 
 # Group work break-down strategy
-Please add
+Sho Harimoto - find and fix the problem in main.py and load_json.py. help with connect two files.
 
 # Code execution guide
 Please add
