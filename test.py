@@ -4,69 +4,81 @@ from pymongo import MongoClient
 def connect_to_db(port):
     """Connect to MongoDB and return the database instance."""
     try:
-        client = pymongo.MongoClient(f"mongodb://localhost:{port}")
-        db = client["291db"]  # Replace with the correct database name
+        client = MongoClient(f"mongodb://localhost:{port}")
+        db = client["291db"]
         print(f"Connected to MongoDB on port {port}.")
         return db
     except Exception as e:
         print(f"Error connecting to MongoDB: {e}")
         return None
 
-def search_users(db, keyword):
-    """Search for users based on a keyword."""
-    collection = db['tweets']  # Change to your collection name
+def search_tweets(db, keywords):
+    """Search for tweets based on keywords (AND semantics)."""
+    collection = db['tweets']
     
-    query = {"$or": [
-        {"user.displayname": {"$regex": keyword, "$options": "i"}},
-        {"user.location": {"$regex": keyword, "$options": "i"}}
-    ]}
+    # Build the query for AND semantics
+    query = {"$and": [{"content": {"$regex": keyword, "$options": "i"}} for keyword in keywords]}
+    print(f"Constructed Query: {query}")  # Debug: Print the query being executed
     
     results = collection.find(query)
-    user_list = []
-    seen_users = []
 
-    for result in results:
-        user = result['user']
-        if user['username'] not in seen_users:
-            seen_users.append(user['username'])
-            user_list.append({
-                "username": user['username'],
-                "displayname": user['displayname'],
-                "location": user.get('location', 'N/A')
-            })
+    tweets = []
+    seen_ids = set()  # To keep track of seen tweet IDs and avoid duplicates
+    print("\nTweets matching the keywords:")
+    for tweet in results:
+        if tweet['id'] not in seen_ids:
+            seen_ids.add(tweet['id'])  # Mark this ID as seen
+            print(f"ID: {tweet['id']}, Date: {tweet['date']}, Content: {tweet['content']}, Username: {tweet['user']['username']}")
+            tweets.append(tweet)
 
-    print("\nUsers matching the keyword:")
-    if user_list:
-        for user in user_list:
-            print(f"Username: {user['username']}, Displayname: {user['displayname']}, Location: {user['location']}")
-    else:
-        print("No users found.")
+    if not tweets:
+        print("No tweets found.")
+        return
+
+    # Allow user to select a tweet to view full details
+    while True:
+        try:
+            selection = int(input("\nEnter the number of the tweet to view full information (or 0 to go back): "))
+            if selection == 0:
+                print("Returning to main menu.")
+                break
+            elif 1 <= selection <= len(tweets):
+                selected_tweet = tweets[selection - 1]
+                print("\nFull information about the selected tweet:")
+                for key, value in selected_tweet.items():
+                    print(f"{key}: {value}")
+            else:
+                print("Invalid selection. Please choose a valid tweet number.")
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+
+
+
 
 def main():
     port = input("Enter the port number where MongoDB is running: ").strip()
     
     # Connect to database
     db = connect_to_db(port)
-    if db is None:  # Corrected check
+    if db is None:
         print("Failed to connect to the database. Exiting.")
         return
-    
+
     # Main menu
     while True:
         print("\nSelect an operation:")
-        print("1. Search for users")
+        print("1. Search for tweets by keywords")
         print("2. Exit")
         
         choice = input("Enter your choice: ").strip()
         
         if choice == "1":
-            keyword = input("Enter keyword: ").strip()
-            search_users(db, keyword)
+            keywords = input("Enter keywords (comma-separated): ").strip().split(',')
+            search_tweets(db, [kw.strip() for kw in keywords])
         elif choice == "2":
             print("Exiting program.")
             break
         else:
             print("Invalid choice. Please select again.")
 
-if __name__ == "__main__":
-    main()
+main()
