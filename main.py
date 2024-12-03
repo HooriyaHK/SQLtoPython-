@@ -112,4 +112,3 @@ def compose_tweet(content, port):
     
     result = collection.insert_one(tweet)
     print(f"Tweet inserted with ID: {result.inserted_id}")
-
