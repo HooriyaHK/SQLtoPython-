@@ -118,13 +118,12 @@ if __name__ == "__main__":
      port = input("Enter MongoDB port number: ")
      file = input("Enter JSON file name: ")
      db = load_json_to_mongodb(file, port)
-     while True:
-        print("\nMain Menu")
-        print("1. Search for tweets")
-        print("2. Search for users")
-        print("3. List top tweets")
-        print("4. List top users")
-        print("5. Compose a tweet")
-        print("6. Exit")
-        choice = input("Enter your choice: ")
-    
+    #  while True:
+    #     print("\nMain Menu")
+    #     print("1. Search for tweets")
+    #     print("2. Search for users")
+    #     print("3. List top tweets")
+    #     print("4. List top users")
+    #     print("5. Compose a tweet")
+    #     print("6. Exit")
+    #     choice = input("Enter your choice: ")
