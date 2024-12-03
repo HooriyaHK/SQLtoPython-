@@ -15,3 +15,4 @@ tweets.insert_many(json_data)
 
 print("Data loaded successfully!")
 
+
