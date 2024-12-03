@@ -115,7 +115,7 @@ def compose_tweet(content, port):
     print(f"Tweet inserted with ID: {result.inserted_id}")
 
 # Load data from 10.json
-load_json_data('10.json', 27017)
+load_json_data('10.json', 61448)
 
 # Run test queries
 print("\nTop tweets by likeCount:")
@@ -133,7 +133,9 @@ print("\nSearch keyword (tweets):")
 #search_tweets("Farmer", 27017)
 
 # Connect to the database for user search
-client = MongoClient('mongodb://localhost:27017/')
+
+
+client = MongoClient('mongodb://localhost:61448/')
 db = client['291db']
 
 # Search for users with the keyword "John"

@@ -2,7 +2,7 @@ import json
 from pymongo import MongoClient
 
 # Connect to MongoDB
-client = MongoClient('mongodb://localhost:27017/')
+client = MongoClient('mongodb://localhost:61448/')
 db = client['291db']
 tweets = db['tweets']
 
@@ -14,3 +14,4 @@ with open('100.json', 'r', encoding='utf-8') as file:
 tweets.insert_many(json_data)
 
 print("Data loaded successfully!")
+
