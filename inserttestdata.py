@@ -1,24 +1,16 @@
-([
-    {
-        "_id": 1,
-        "content": "Learning MongoDB is fun!",
-        "username": "user1",
-        "date": "2024-11-28",
-        "retweetCount": 10,
-        "likeCount": 25,
-        "quoteCount": 5,
-        "followersCount": 100  
-    },
-    {
-        "_id": 2,
-        "content": "Working on the CMPUT 291 project.",
-        "username": "user2",
-        "date": "2024-11-27",
-        "retweetCount": 15,
-        "likeCount": 30,
-        "quoteCount": 8,
-        "followersCount": 200  
-    }
-])
+import json
+from pymongo import MongoClient
 
-print("Test data inserted successfully!")
+# Connect to MongoDB
+client = MongoClient('mongodb://localhost:27017/')
+db = client['291db']
+tweets = db['tweets']
+
+# Load the JSON file
+with open('100.json', 'r', encoding='utf-8') as file:
+    json_data = [json.loads(line) for line in file]
+
+# Insert data into MongoDB
+tweets.insert_many(json_data)
+
+print("Data loaded successfully!")
