@@ -16,6 +16,7 @@ def load_json_to_mongodb(json_file, port):
             collection.drop()
             print("Existing 'tweets' collection dropped.")
 
+
         # Insert data in batches
         with open(json_file, "r", encoding="utf-8") as file:
             batch = []
@@ -38,5 +39,3 @@ def load_json_to_mongodb(json_file, port):
         #print("All tweets have been successfully loaded into the 'tweets' collection.")
        # client.close()
        # print("MongoDB connection closed.")
-
-

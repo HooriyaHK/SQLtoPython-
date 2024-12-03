@@ -6,17 +6,15 @@ from pymongo import MongoClient
 from datetime import datetime
 
 #multi join should work
-def search_tweets(keywords, port):
+def search_tweets(keywords, collection):
     """Search tweets containing specific keywords."""
-
     # Support both single and multiple keyword search
     if isinstance(keywords, str):
         keywords = [keywords]
-
     # Build query to match all keywords
     query = {"$and": [{"content": {"$regex": keyword, "$options": "i"}} for keyword in keywords]}
     results = collection.find(query)
-
+    # getting matching tweets
     for tweet in results:
         print(f"ID: {tweet.get('_id')}")
         print(f"Date: {tweet.get('date')}")
@@ -76,7 +74,7 @@ def search_users(db, keyword):
         print("No users found.")
 
 
-def list_top_tweets(field, n, port):
+def list_top_tweets(field, n, collection):
     """List top N tweets sorted by a specific field."""
     
     tweets = collection.find({}, {"_id": 1, "date": 1, "content": 1, "username": 1}) \
@@ -85,7 +83,7 @@ def list_top_tweets(field, n, port):
     for tweet in tweets:
         print(tweet)
 
-def list_top_users(n, port):
+def list_top_users(n):
     """List top N users by followersCount."""
     
     users = collection.aggregate([
@@ -98,7 +96,7 @@ def list_top_users(n, port):
     for user in users:
         print(user)
 
-def compose_tweet(content, port):
+def compose_tweet(content, collection):
     """Compose a new tweet and insert into MongoDB."""
    
     tweet = {
@@ -114,10 +112,9 @@ def compose_tweet(content, port):
     result = collection.insert_one(tweet)
     print(f"Tweet inserted with ID: {result.inserted_id}")
 
-  
+ 
 
 if __name__ == "__main__":
-
      port = input("Enter MongoDB port number: ")
      file = input("Enter JSON file name: ")
      db = load_json_to_mongodb(file, port)
@@ -128,10 +125,6 @@ if __name__ == "__main__":
         print("3. List top tweets")
         print("4. List top users")
         print("5. Compose a tweet")
-        print("6. Exit")    
+        print("6. Exit")
         choice = input("Enter your choice: ")
-
-        
-
-
-       
+    
