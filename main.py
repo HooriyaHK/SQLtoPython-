@@ -6,10 +6,8 @@ from pymongo import MongoClient
 from datetime import datetime
 
 #multi join should work
-def search_tweets(collection, keywords):
-   
+def search_tweets(keywords, collection):
     query = {"$and": [{"content": {"$regex": rf"\b{keyword}\b", "$options": "i"}} for keyword in keywords]} 
-    
     results = collection.find(query)
 
     tweets = []
@@ -42,7 +40,7 @@ def search_tweets(collection, keywords):
             print("Invalid input. Please enter a number.")
 
 
-def search_users(collection, keyword):
+def search_users(keyword, collection):
     query = {
         "$or": [
             {"user.displayname": {"$regex": keyword, "$options": "i"}},
@@ -150,7 +148,7 @@ if __name__ == "__main__":
             search_tweets(collection, keywords)
         elif choice == "2":
             keyword = input("Enter user name to search users: ")
-            search_users(collection, keyword)
+            search_users(keyword, collection)
         elif choice == "3":
             n = input("How many tweets do you want to rank? ")
             print("1. Rank by Retweet Count")
@@ -170,7 +168,3 @@ if __name__ == "__main__":
 
         else:
             print("invalid choice")
-
-        
-
-    
