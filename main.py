@@ -6,21 +6,42 @@ from pymongo import MongoClient
 from datetime import datetime
 
 #multi join should work
-def search_tweets(keywords, collection):
-    """Search tweets containing specific keywords."""
-    # Support both single and multiple keyword search
-    if isinstance(keywords, str):
-        keywords = [keywords]
-    # Build query to match all keywords
-    query = {"$and": [{"content": {"$regex": keyword, "$options": "i"}} for keyword in keywords]}
+def search_tweets(db, keywords):
+    collection = db['tweets']
+    
+    query = {"$and": [{"content": {"$regex": rf"\b{keyword}\b", "$options": "i"}} for keyword in keywords]} 
+    
     results = collection.find(query)
-    # getting matching tweets
-    for tweet in results:
-        print(f"ID: {tweet.get('_id')}")
-        print(f"Date: {tweet.get('date')}")
-        print(f"Content: {tweet.get('content')}")
-        print(f"Username: {tweet.get('username', {}).get('username', 'Unknown')}")
-        print("-" * 40)
+
+    tweets = []
+    seen_ids = set()  # tracking seen tweet IDs avoid duplicates
+
+    print("\nTweets matching the keywords:")
+    for i, tweet in enumerate(results):
+        if tweet['id'] not in seen_ids: 
+            seen_ids.add(tweet['id'])
+            tweets.append(tweet)
+            print(f"({len(tweets)}). ID: {tweet['id']}, Date: {tweet['date']}, Content: {tweet['content']}, Username: {tweet['user']['username']}")
+    if not tweets:
+        print("No tweets found.")
+        return
+
+    while True:
+        try:
+            selection = int(input("\nEnter the number of the tweet to view full information (or 0 to go back): "))
+            if selection == 0:
+                print("Returning to main menu.")
+                break
+            elif 1 <= selection <= len(tweets):
+                selected_tweet = tweets[selection - 1]
+                print("\nFull information about the selected tweet:")
+                for key, value in selected_tweet.items(): #printing everything
+                    print(f"{key}: {value}")
+            else:
+                print("Invalid selection. Please choose a valid tweet number.")
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+
 
 def search_users(db, keyword):
     collection = db['tweets']  # collection name // not sure if we 
