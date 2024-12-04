@@ -9,10 +9,14 @@ def load_json_to_mongodb(json_file, port):
 
         # Create database and collection
         db = client["291db"]
-        collection = db["tweets"]
+        collection_name = "tweets"
 
-  
-
+         # Drop the collection if it exists
+        if collection_name in db.list_collection_names():
+            db[collection_name].drop()
+            print("Existing 'tweets' collection dropped.")
+        collection = db[collection_name]
+        print("Create a new collection called "+collection_name+".")
 
         # Insert data in batches
         with open(json_file, "r", encoding="utf-8") as file:
@@ -32,7 +36,8 @@ def load_json_to_mongodb(json_file, port):
             if batch:
                 collection.insert_many(batch)
                 print(f"Inserted {len(batch)} tweets into the collection.")
-            
+        return collection
+
         return collection
 
         #print("All tweets have been successfully loaded into the 'tweets' collection.")

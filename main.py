@@ -302,7 +302,7 @@ if __name__ == "__main__":
 
         if choice == "1":
             keywords = input("Enter keywords to search tweets: ").split()
-            search_tweets(keywords, collection)
+            search_tweets(collection, keywords)
         elif choice == "2":
             keyword = input("Enter user name to search users: ")
             search_users(keyword, collection)
@@ -323,10 +323,5 @@ if __name__ == "__main__":
             print("Goodbye! :)")
             break
 
-
         else:
             print("invalid choice")
-
-        
-
-    
