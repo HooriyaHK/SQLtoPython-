@@ -10,6 +10,7 @@ Group member names and ccids (3-4 members)
 
 # Group work break-down strategy
 Sho Harimoto - find and fix the problem in main.py and load_json.py. help with connect two files.
+Hooriya Kazmi - I worked on query 3, 4 and 5. Making sure they worked in connection with phase 1, met all the requirements and were formatted correctly in the output
 
 Angela Solanki - worked on phase 1, creating a connection between the server, as well as creating the collection + database (load_json.py). I also created the user main menu page on main.py
 
@@ -20,4 +21,4 @@ Please add
 We did not collaborate with anyone else
 
 # More detail of any AI tool used.
-Used ChatGPT to create debugging files when testing queries 
+Used ChatGPT to create a file of edgecases to test queries 
