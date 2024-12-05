@@ -9,7 +9,7 @@ Group member names and ccids (3-4 members)
   hawaleh, Hana Awaleh
 
 # Group work break-down strategy
-Sho Harimoto - find and fix the problem in main.py and load_json.py. help with connect two files.
+Sho Harimoto - find and fix the problem in main.py and load_json.py. help with connect two files. Test queries.
 
 Angela Solanki - worked on phase 1, creating a connection between the server, as well as creating the collection + database (load_json.py). I also created the user main menu page on main.py
 

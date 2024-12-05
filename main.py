@@ -66,7 +66,7 @@ def search_tweets(keywords, collection):
                         print(f"  Profile URL: {user_info.get('url', 'N/A')}")
                         print(f"  Profile Image: {user_info.get('profileImageUrl', 'N/A')}")
                         print(f"  Account Created: {user_info.get('created', 'N/A')}")
-                    else:
+                    elif(key != "_id"):
                         print(f"{key}: {value}")
             else:
                 print("Invalid selection. Please choose a valid tweet number.")
@@ -302,7 +302,7 @@ if __name__ == "__main__":
 
         if choice == "1":
             keywords = input("Enter keywords to search tweets: ").split()
-            search_tweets(collection, keywords)
+            search_tweets(keywords, collection)
         elif choice == "2":
             keyword = input("Enter user name to search users: ")
             search_users(keyword, collection)
