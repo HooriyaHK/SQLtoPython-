@@ -4,20 +4,21 @@ from load_json import load_json_to_mongodb
 import json
 from pymongo import MongoClient
 from datetime import datetime
+import re
 
 #multi join should work
 def search_tweets(keywords, collection):
-    # Normalize keywords to remove apostrophes and extra spaces
-    normalized_keywords = [keyword.replace("'", "").strip() for keyword in keywords]
+    # Normalize keywords to remove apostrophes and trim spaces
+    normalized_keywords = [re.sub(r"[’']", "", keyword.strip()) for keyword in keywords]
 
-    # Build a flexible query to match hashtags and plain text, considering word boundaries
+    # Build a flexible query to match hashtags and plain text, considering plurals and apostrophes
     query = {
         "$and": [
             {
                 "$or": [
-                    {"content": {"$regex": rf"\b{keyword}\b", "$options": "i"}},  # Exact word match with boundary
-                    {"content": {"$regex": rf"\b{keyword.replace('#', '')}\b", "$options": "i"}},  # Match without hashtag
-                    {"content": {"$regex": rf"{keyword}", "$options": "i"}}  # General match without boundaries
+                    {"content": {"$regex": rf"\b{keyword}\b", "$options": "i"}},  # Exact word match with word boundaries
+                    {"content": {"$regex": rf"\b{keyword.rstrip('s')}(s|')?\b", "$options": "i"}},  # Match singular/plural
+                    {"content": {"$regex": rf"{keyword}", "$options": "i"}}  # General match
                 ]
             }
             for keyword in normalized_keywords
@@ -31,7 +32,7 @@ def search_tweets(keywords, collection):
     seen_ids = set()  # Track seen tweet IDs to avoid duplicates
 
     print("\nTweets matching the keywords:")
-    for i, tweet in enumerate(results):
+    for tweet in results:
         if tweet['id'] not in seen_ids:
             seen_ids.add(tweet['id'])
             tweets.append(tweet)
@@ -66,7 +67,7 @@ def search_tweets(keywords, collection):
                         print(f"  Profile URL: {user_info.get('url', 'N/A')}")
                         print(f"  Profile Image: {user_info.get('profileImageUrl', 'N/A')}")
                         print(f"  Account Created: {user_info.get('created', 'N/A')}")
-                    elif(key != "_id"):
+                    elif key != "_id":
                         print(f"{key}: {value}")
             else:
                 print("Invalid selection. Please choose a valid tweet number.")

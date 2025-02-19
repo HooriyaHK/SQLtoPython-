@@ -1,0 +1,24 @@
+{
+    "tweets": [
+        {
+            "id": 1,
+            "date": "2024-12-01T00:00:00Z",
+            "content": "Hello world! #welcome",
+            "user": {
+                "username": "testuser",
+                "displayname": "Test User"
+            },
+            "retweetCount": 10,
+            "likeCount": 5,
+            "quoteCount": 2
+        }
+    ],
+    "users": [
+        {
+            "username": "testuser",
+            "displayname": "Test User",
+            "location": "Test City",
+            "followersCount": 100
+        }
+    ]
+}

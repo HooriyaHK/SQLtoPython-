@@ -1,0 +1,94 @@
+{
+    "tests": [
+      {
+        "query_type": "search_tweets",
+        "query": "farmers #Protest",
+        "expected_output": [
+          {
+            "id": 1376738436099399686,
+            "date": "2021-03-30T03:29:56+00:00",
+            "content": "They can't be farmers. Looks like Gundas are having good time. They seem to be violence thirsty goons. #FarmersProtest",
+            "username": "Abhimanyu_1987"
+          },
+          {
+            "id": 1376730134237999105,
+            "date": "2021-03-30T02:56:57+00:00",
+            "content": "This comes a day after a party MLA was allegedly assaulted by a group of farmers protesting against the Centre's farm laws. #Punjab",
+            "username": "IndiaToday"
+          }
+        ]
+      },
+      {
+        "query_type": "search_users",
+        "query": "raj",
+        "expected_output": [
+          {
+            "username": "rajriarhughes",
+            "displayname": "Raj Riar Hughes",
+            "location": "India"
+          },
+          {
+            "username": "rajkumar",
+            "displayname": "Raj Kumar",
+            "location": "Jaipur"
+          }
+        ]
+      },
+      {
+        "query_type": "list_top_tweets",
+        "query": {
+          "criteria": "retweetCount",
+          "count": 2
+        },
+        "expected_output": [
+          {
+            "id": 1376730134237999105,
+            "date": "2021-03-30T02:56:57+00:00",
+            "content": "This comes a day after a party MLA was allegedly assaulted by a group of farmers protesting against the Centre's farm laws. #Punjab",
+            "username": "IndiaToday"
+          },
+          {
+            "id": 1376738436099399686,
+            "date": "2021-03-30T03:29:56+00:00",
+            "content": "They can't be farmers. Looks like Gundas are having good time. They seem to be violence thirsty goons. #FarmersProtest",
+            "username": "Abhimanyu_1987"
+          }
+        ]
+      },
+      {
+        "query_type": "list_top_users",
+        "query": {
+          "count": 2
+        },
+        "expected_output": [
+          {
+            "username": "IndiaToday",
+            "displayname": "IndiaToday",
+            "followersCount": 5570392
+          },
+          {
+            "username": "rajriarhughes",
+            "displayname": "Raj Riar Hughes",
+            "followersCount": 643
+          }
+        ]
+      },
+      {
+        "query_type": "compose_tweet",
+        "query": {
+          "content": "Testing compose functionality with #ExampleTweet"
+        },
+        "expected_output": {
+          "confirmation": "Tweet successfully added.",
+          "tweet": {
+            "id": "auto-generated",
+            "date": "system-date",
+            "content": "Testing compose functionality with #ExampleTweet",
+            "username": "291user",
+            "other_fields": null
+          }
+        }
+      }
+    ]
+  }
+  
